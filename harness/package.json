@@ -1,0 +1,17 @@
+{
+  "name": "resonance-harness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP bridge that lets a local harness (Claude Code, Cursor, …) act as the attendee's private brain for the Resonance relay.",
+  "bin": {
+    "resonance-harness": "src/index.mjs"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "smoke": "node src/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
