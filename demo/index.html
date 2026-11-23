@@ -8,9 +8,12 @@
     <title>Resonance · 参会者连接演示</title>
     <meta
       name="description"
-      content="让 Agent 在暗处替你试错：双盲匿名互考，双方都过线才解锁真身，每天最多三张卡。四步看懂。"
+      content="让 Agent 在暗处替你试错：双盲匿名互考，双方都过线才解锁真身，每天最多三张卡。四步走完。"
     />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23c6f24e%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23121405%27/%3E%3C/svg%3E" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23c6f24e%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23121405%27/%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -27,25 +30,37 @@
       </div>
     </header>
 
+    <nav class="rail" id="rail" hidden aria-label="进度">
+      <div class="wrap rail-inner">
+        <button class="rail-item" type="button" data-step="1"><b>01</b><span>建档</span></button>
+        <button class="rail-item" type="button" data-step="2"><b>02</b><span>暗池</span></button>
+        <button class="rail-item" type="button" data-step="3"><b>03</b><span>卡片</span></button>
+        <button class="rail-item" type="button" data-step="4"><b>04</b><span>带走</span></button>
+      </div>
+    </nav>
+
     <main class="wrap">
-      <!-- hero -->
-      <section class="hero">
+      <section class="hero" id="hero">
         <h1>让 Agent 在暗处替你试错，<br />人类只负责见面。</h1>
         <p class="lead">
           万人会议里，认识人最难的不是没名单，是不敢开口、也不好意思说自己想找什么。
           这套东西让每个人的 AI 分身先在后台匿名聊一轮，筛出真正值得见的人，再把你拉到线下。
         </p>
-        <div class="hero-points">
-          <div><span>01</span>你的真实诉求加密存放，不会原样给任何人看</div>
-          <div><span>02</span>两个分身匿名互考，双方都过线才解锁真身</div>
-          <div><span>03</span>单向不合适当场销毁，对方永远不知道你来过</div>
-          <div><span>04</span>每天最多三张卡，不做又一个消息炸锅的 App</div>
+        <ul class="hero-points">
+          <li><span>01</span>你的真实诉求加密存放，不会原样给任何人看</li>
+          <li><span>02</span>两个分身匿名互考，双方都过线才解锁真身</li>
+          <li><span>03</span>单向不合适当场销毁，对方永远不知道你来过</li>
+          <li><span>04</span>每天最多三张卡，不做又一个消息炸锅的 App</li>
+        </ul>
+        <div class="actions">
+          <button class="btn primary" id="btn-start" type="button">开始看一遍 · 约 90 秒</button>
+          <span class="actions-hint">四步按顺序走，每步做完才会出现下一步</span>
         </div>
       </section>
 
-      <!-- 01 -->
-      <section class="step" id="step1">
-        <div class="step-head">
+      <!-- --------------------------------------------------------- step 01 -->
+      <section class="stage" data-step="1" hidden>
+        <div class="stage-head">
           <span class="num">01</span>
           <div>
             <h2>你只需要给两样东西</h2>
@@ -53,54 +68,53 @@
           </div>
         </div>
 
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-label">公开部分 · 自动带过来</div>
-            <div class="chips" id="fingerprint">
-              <span class="chip risk">RL 策略优化</span>
-              <span class="chip risk">可验证奖励推理</span>
-              <span class="chip risk">RL rollout 基础设施</span>
-              <span class="chip risk">arXiv 2603.xxxxx</span>
-              <span class="chip risk">GitHub 4.1k star</span>
-            </div>
-            <p class="note">
-              这些特征直接发出去，两条检索就能反推出你是谁。所以我们不会发这些。
-            </p>
+        <div class="panel">
+          <div class="panel-label">公开部分 · 自动带过来</div>
+          <div class="chips">
+            <span class="chip risk">RL 策略优化</span>
+            <span class="chip risk">可验证奖励推理</span>
+            <span class="chip risk">RL rollout 基础设施</span>
+            <span class="chip risk">arXiv 2603.xxxxx</span>
+            <span class="chip risk">GitHub 4.1k star</span>
           </div>
+          <p class="note">这些特征直接发出去，两条检索就能反推出你是谁。所以我们不会发这些。</p>
+        </div>
 
-          <div class="panel">
-            <div class="panel-label">对外展示 · 泛化之后</div>
-            <div class="chips" id="generalized" aria-live="polite">
-              <span class="chip ghost">等待生成…</span>
-            </div>
-            <div class="cohort" id="cohort" hidden>
-              <span class="cohort-label">同簇人群</span>
-              <b id="cohort-value">14</b>
-              <span class="cohort-hint">人以上，无法反推到具体的某一位</span>
-            </div>
-            <p class="note" id="generalized-note">
-              系统会把你的研究指纹压成几个通用标签，任何一条背后都至少有十几个人。
-            </p>
+        <div class="panel">
+          <div class="panel-label">对外展示 · 泛化之后</div>
+          <div class="chips" id="generalized"><span class="chip ghost">等待生成…</span></div>
+          <div class="cohort" id="cohort" hidden>
+            <span class="cohort-label">同簇人群</span>
+            <b>14</b>
+            <span class="cohort-hint">人以上，拼在一起也反推不到具体某一位</span>
           </div>
         </div>
 
-        <div class="panel brief">
+        <div class="panel">
           <div class="panel-label">私密部分 · 加密存放，只有你的分身能用</div>
-          <div class="brief-row"><span>当前卡点</span><p>多机异步 rollout 时 KV cache 换入换出把长尾延迟顶起来了，显存碎片比容量更致命</p></div>
-          <div class="brief-row"><span>反共识</span><p>纯堆合成数据长度已经见顶，真正的杠杆在调度而不是更多 token</p></div>
-          <div class="brief-row"><span>想要什么</span><p>低调找一位做推理引擎的联创<span class="redact" title="这类信息只在密闭沙盒里出现">████</span></p></div>
+          <div class="brief-row">
+            <span>当前卡点</span>
+            <p>多机异步 rollout 时 KV cache 换入换出把长尾延迟顶起来了，显存碎片比容量更致命</p>
+          </div>
+          <div class="brief-row">
+            <span>反共识</span>
+            <p>纯堆合成数据长度已经见顶，真正的杠杆在调度而不是更多 token</p>
+          </div>
+          <div class="brief-row">
+            <span>想要什么</span>
+            <p>低调找一位做推理引擎的联创<span class="redact" title="这类信息只在密闭沙盒里出现">████</span></p>
+          </div>
         </div>
 
         <div class="actions">
-          <button class="btn primary" id="btn-generalize">生成我的分身</button>
-          <button class="btn ghost" id="btn-voice">口述 60 秒（没时间打字）</button>
+          <button class="btn primary" id="btn-generalize" type="button">生成我的分身</button>
           <span class="actions-hint" id="step1-hint"></span>
         </div>
       </section>
 
-      <!-- 02 -->
-      <section class="step" id="step2">
-        <div class="step-head">
+      <!-- --------------------------------------------------------- step 02 -->
+      <section class="stage" data-step="2" hidden>
+        <div class="stage-head">
           <span class="num">02</span>
           <div>
             <h2>凌晨两点，两个分身在你看不见的地方交锋</h2>
@@ -111,7 +125,7 @@
         <div class="panel sandbox">
           <div class="sandbox-head">
             <span class="live"><i></i>暗池运行中</span>
-            <span class="muted">双方匿名 · 只交换技术与诉求 · 阅后即焚</span>
+            <span class="muted">双方匿名 · 阅后即焚</span>
           </div>
           <div class="dialogue" id="dialogue" aria-live="polite"></div>
 
@@ -124,9 +138,7 @@
               <div class="score-n" data-target="88">0</div>
               <div class="score-k">B 的评分</div>
             </div>
-            <div class="verdict ok" id="verdict-ok" hidden>
-              双方都过线 · 明天早上会收到一张卡
-            </div>
+            <div class="verdict ok" id="verdict-ok" hidden>双方都过线</div>
           </div>
 
           <div class="side-pair" id="side-pair" hidden>
@@ -135,60 +147,44 @@
               <span class="chip dim">A 提议 41 分</span>
               <span class="verdict dead">单向不达标 · 当场销毁</span>
             </div>
-            <p class="note">那位创业者永远不会知道自己被拒了，Maya 也不会被打扰。</p>
+            <p class="note">那位创业者永远不会知道自己被拒了，对方也不会被打扰。</p>
           </div>
         </div>
 
         <div class="actions">
-          <button class="btn primary" id="btn-run">开始今晚的撮合</button>
+          <button class="btn primary" id="btn-run" type="button">开始今晚的撮合</button>
           <span class="actions-hint" id="step2-hint"></span>
         </div>
       </section>
 
-      <!-- 03 -->
-      <section class="step" id="step3">
-        <div class="step-head">
+      <!-- --------------------------------------------------------- step 03 -->
+      <section class="stage" data-step="3" hidden>
+        <div class="stage-head">
           <span class="num">03</span>
           <div>
             <h2>早上八点，最多三张卡</h2>
-            <p>没有 99+ 未读。每张卡只说三件事：为什么值得见、第一句从哪切入、什么时候见。</p>
+            <p>没有 99+ 未读。卡片一张一张发，处理完手里这张，才给下一张。</p>
           </div>
         </div>
 
-        <article class="card" id="morning-card">
-          <div class="card-top">
-            <span class="card-kind">今日最高共振 · 待解锁</span>
-            <span class="chip ghost" id="card-state">未解锁</span>
-          </div>
-          <h3>共振 · 可验证奖励推理</h3>
-          <dl>
-            <div><dt>为什么</dt><dd>你们在异步 rollout 与 KV 调度上的卡点直接互补，对方的回答里有具体的机制和代价。</dd></div>
-            <div><dt>第一句</dt><dd>双缓冲切换指针时，怎么保证旧版权重还在被读的时候不被回收？</dd></div>
-            <div><dt>时间</dt><dd>Day 1 · 14:30–14:50 · Level 2 咖啡角</dd></div>
-          </dl>
+        <div class="quota-bar">
+          <span class="quota-label">今日卡片</span>
+          <span class="quota-count" id="quota-count">0 / 3</span>
+          <span class="quota-hint" id="quota-hint">先处理这张 1v1</span>
+        </div>
 
-          <div class="sealed" id="sealed">
-            <b>双方确认前，彼此都只看到匿名画像</b>
-          </div>
+        <div id="card-host"></div>
 
-          <div class="revealed" id="revealed" hidden>
-            <div class="peer-name">陈哲</div>
-            <div class="peer-meta">RL 算法研究员 · Singapore AI Lab · 悉尼会场</div>
-            <div class="peer-line">共同方向：可验证奖励推理</div>
-            <div class="peer-line">你们约在 Day 1 · 14:30 · Level 2 咖啡角</div>
-          </div>
-
+        <div id="step3-next" hidden>
           <div class="actions">
-            <button class="btn primary" id="btn-accept">同意，解锁身份</button>
-            <button class="btn ghost" id="btn-decline">暂不感兴趣</button>
-            <span class="actions-hint" id="step3-hint"></span>
+            <button class="btn primary" id="btn-to-step4" type="button">今天就这样 · 看看能带走什么</button>
           </div>
-        </article>
+        </div>
       </section>
 
-      <!-- 04 -->
-      <section class="step" id="step4">
-        <div class="step-head">
+      <!-- --------------------------------------------------------- step 04 -->
+      <section class="stage" data-step="4" hidden>
+        <div class="stage-head">
           <span class="num">04</span>
           <div>
             <h2>七天之后，这东西能带走</h2>
@@ -196,39 +192,36 @@
           </div>
         </div>
 
-        <div class="grid-2">
-          <div class="panel">
-            <div class="panel-label">会后纪要 · 预览</div>
-            <pre class="preview" id="preview"># 我的 NeurIPS 2026 连接纪要
+        <div class="panel">
+          <div class="panel-label">它替你做的事</div>
+          <ul class="done-list">
+            <li>读过 <b>156</b> 位参会者的公开资料</li>
+            <li>在封闭沙盒里聊过 <b>18</b> 场</li>
+            <li>其中 <b>14</b> 场双向达标，剩下 4 场静默销毁</li>
+            <li>最后只给你看了 <b>3</b> 张卡</li>
+          </ul>
+          <p class="note">你付出的注意力是 3 张卡，不是 300 条消息。</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-label">会后纪要 · 预览</div>
+          <pre class="preview" id="preview"># 我的 NeurIPS 2026 连接纪要
 
 - 已解锁：1 位
 - 微圆桌：1 场（4 人 · 长上下文与记忆）
 - 当前卡点：KV cache 换入换出的长尾延迟
 - 雷区：只谈商业模式不谈底层
 …</pre>
-          </div>
-          <div class="panel">
-            <div class="panel-label">它替你做的事</div>
-            <ul class="done-list">
-              <li>读过 <b>156</b> 位参会者的公开资料</li>
-              <li>在封闭沙盒里聊过 <b>18</b> 场</li>
-              <li>其中 <b>14</b> 场双向达标，剩下 4 场静默销毁</li>
-              <li>最后只给你看了 <b>3</b> 张卡</li>
-            </ul>
-            <p class="note">你付出的注意力是 3 张卡，不是 300 条消息。</p>
-          </div>
         </div>
 
         <div class="actions">
-          <button class="btn primary" id="btn-export">下载纪要（.md）</button>
+          <button class="btn primary" id="btn-export" type="button">下载纪要（.md）</button>
           <span class="actions-hint">真的能下载，可以直接喂给 Claude / ChatGPT</span>
         </div>
       </section>
 
       <footer class="foot">
-        <p>
-          这是一个<b>交互演示</b>，数据为预置样例，所有姓名、机构、论文均为虚构。
-        </p>
+        <p>这是一个<b>交互演示</b>，数据为预置样例，所有姓名、机构、论文均为虚构。</p>
         <p class="muted">
           完整实现（可运行的后端、加密私密档案、封闭沙盒、k-匿名网关、A2A 协议、93 个测试）在
           <a href="https://github.com/GenBrg/resonance-a2a" target="_blank" rel="noreferrer">GitHub 仓库</a>。
@@ -239,4 +232,3 @@
     <script src="./app.js"></script>
   </body>
 </html>
-
