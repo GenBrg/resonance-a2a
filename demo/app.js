@@ -40,6 +40,9 @@ function advance(to) {
 
 $("#btn-start").addEventListener("click", () => advance(1));
 
+// initialise the rail (all steps locked) before the first interaction
+showStage(0);
+
 document.querySelectorAll(".rail-item").forEach((node) => {
   node.addEventListener("click", () => {
     const n = Number(node.dataset.step);
@@ -290,17 +293,17 @@ function handleAction(card, data, action, actions) {
   const msg = card.querySelector("[data-role=msg]");
   const state = card.querySelector("[data-role=state]");
 
-  const done = (text, tone) => {
+  const done = (text, tone, label) => {
     msg.hidden = false;
     msg.className = `card-msg ${tone || ""}`;
     msg.textContent = text;
-    nextCard();
+    offerNext(card, actions, label || "下一张卡");
   };
 
   if (cardIndex === 0) {
     // the canonical unlock flow: one-sided accept must NOT reveal anything
     if (action.act === "decline") {
-      done("已拒绝。对方不会收到任何通知，也不会知道你看过。", "muted");
+      done("已拒绝。对方不会收到任何通知，也不会知道你看过。", "muted", "下一张卡");
       return;
     }
     state.textContent = "已同意 · 等对方";
@@ -320,7 +323,7 @@ function handleAction(card, data, action, actions) {
       state.textContent = "已解锁";
       state.className = "chip safe";
       msg.textContent = "对方也点了同意 → 真名、机构、日程同时解锁。";
-      nextCard();
+      offerNext(card, actions, "下一张卡");
     }, 2000);
     return;
   }
@@ -340,6 +343,22 @@ function handleAction(card, data, action, actions) {
       : "已忽略。15 分钟后这条信号自动失效。",
     action.act === "wave" ? "ok" : "muted",
   );
+}
+
+function offerNext(card, actions, label) {
+  if (actions.querySelector(".btn.primary.next")) return;
+  // the card has been acted on; its old buttons are noise now
+  [...actions.querySelectorAll(".btn")].forEach((node) => node.remove());
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "btn primary next";
+  button.textContent = `${label} →`;
+  button.addEventListener("click", () => {
+    button.disabled = true;
+    nextCard();
+  });
+  actions.appendChild(button);
+  button.focus({ preventScroll: true });
 }
 
 function nextCard() {
@@ -401,3 +420,5 @@ $("#btn-export").addEventListener("click", () => {
   URL.revokeObjectURL(url);
   $("#preview").textContent = DOSSIER;
 });
+
+
