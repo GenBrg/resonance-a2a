@@ -290,6 +290,8 @@ function renderCard() {
 
 function handleAction(card, data, action, actions) {
   actions.querySelectorAll("button").forEach((b) => (b.disabled = true));
+  // count the slot as used the moment the card is handled, not when the next one ships
+  updateQuota(Math.min(CARDS.length, cardIndex + 1));
   const msg = card.querySelector("[data-role=msg]");
   const state = card.querySelector("[data-role=state]");
 
@@ -420,5 +422,6 @@ $("#btn-export").addEventListener("click", () => {
   URL.revokeObjectURL(url);
   $("#preview").textContent = DOSSIER;
 });
+
 
 
